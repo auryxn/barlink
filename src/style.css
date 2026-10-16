@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+:root {
+  --bg: #0b0b12;
+  --panel: #14141f;
+  --panel-2: #1c1c2b;
+  --line: #2a2a3d;
+  --text: #f2f2f7;
+  --muted: #9a9ab0;
+  --accent: #ff8a3d;
+  --accent-2: #ffc93c;
+  --pink: #ff4d8d;
+  --green: #35d07f;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  height: 100%;
+}
+
+body { overscroll-behavior: none; }
+
+/* ---------- Phone frame ---------- */
+.stage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(255,138,61,.18), transparent 60%),
+    radial-gradient(900px 500px at 90% 110%, rgba(255,77,141,.14), transparent 60%),
+    #07070d;
+  padding: 24px;
+}
+
+.phone {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  border-radius: 54px;
+  background: #111;
+  border: 12px solid #1d1d22;
+  box-shadow:
+    0 0 0 2px #000,
+    0 40px 80px rgba(0,0,0,.7),
+    0 0 120px rgba(255,138,61,.12);
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.phone::before {
+  content: "";
+  position: absolute;
+  top: 16px; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 30px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 60;
+}
+
+.notch {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  width: 130px; height: 5px;
+  background: #3a3a44;
+  border-radius: 4px;
+  z-index: 60;
+}
+
+.screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.statusbar {
+  height: 44px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 26px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  z-index: 50;
+}
+
+.app-body { flex: 1 1 auto; overflow-y: auto; overflow-x: hidden; position: relative; }
+.app-body::-webkit-scrollbar { width: 0; }
+
+/* ---------- Bottom nav ---------- */
+.tabbar {
+  flex: 0 0 auto;
+  height: 68px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background: rgba(16,16,26,.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+  z-index: 40;
+}
+.tabbar button {
+  background: none; border: none; color: var(--muted);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; font-size: 10px; cursor: pointer; transition: color .15s;
+}
+.tabbar button.active { color: var(--accent); }
+
+/* ---------- Cards / UI ---------- */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 999px;
+  background: var(--panel-2); border: 1px solid var(--line);
+  font-size: 12px; color: var(--muted); white-space: nowrap;
+}
+.chip.hot { background: rgba(255,138,61,.15); border-color: rgba(255,138,61,.4); color: var(--accent); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px; border-radius: 14px; border: none;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #1a0f00; transition: transform .1s, filter .15s;
+}
+.btn:active { transform: scale(.98); }
+.btn:disabled { filter: grayscale(.8) brightness(.7); cursor: not-allowed; }
+.btn.ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); }
+.btn.pink { background: linear-gradient(135deg, var(--pink), #b03cff); color: #fff; }
+
+.field {
+  width: 100%; padding: 12px 14px; border-radius: 12px;
+  background: var(--panel-2); border: 1px solid var(--line);
+  color: var(--text); font-size: 14px; outline: none;
+}
+.field:focus { border-color: var(--accent); }
+.field::placeholder { color: #5a5a70; }
+select.field { appearance: none; }
+
+.label { font-size: 12px; color: var(--muted); margin-bottom: 6px; display: block; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+
+/* leaflet tweaks */
+.leaflet-container { background: #0e0e16; font: inherit; }
+.leaflet-control-attribution { font-size: 8px !important; opacity: .5; }
+.leaflet-control-zoom a { background: var(--panel) !important; color: var(--text) !important; border-color: var(--line) !important; }
+
+.bar-pin {
+  width: 34px; height: 34px; border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 4px 10px rgba(0,0,0,.5);
+  border: 2px solid #fff2;
+}
+.bar-pin span { transform: rotate(45deg); font-size: 15px; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.fade-up { animation: fadeUp .22s ease both; }
+
+@keyframes pulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+.pulse { animation: pulse 1.6s ease-in-out infinite; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin .8s linear infinite; }
