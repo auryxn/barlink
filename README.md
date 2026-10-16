@@ -1,6 +1,6 @@
 # BarLink
 
-> Часть портфолио: [сайт-портфолио](https://auryxn.github.io) — репозиторий сайта [site-admin](https://github.com/auryxn/site-admin).
+> Часть портфолио: [сайт-портфолио](https://auryxn.github.io/site-admin/) — репозиторий сайта [site-admin](https://github.com/auryxn/site-admin).
 
 > Веб-MVP «знакомства в барах»: выберите заведение на карте, создайте встречу (BarLink) или присоединитесь к чужой.
 
